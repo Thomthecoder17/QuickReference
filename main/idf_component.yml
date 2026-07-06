@@ -15,4 +15,4 @@ dependencies:
   #   # All dependencies of `main` are public by default.
   #   public: true
   espp/spi: ^1.1.4
-  teriyakigod/esp_lcd_st7735: ^0.0.1
+  waveshare/esp_lcd_st7735: ^2.0.0
