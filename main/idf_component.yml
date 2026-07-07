@@ -16,3 +16,4 @@ dependencies:
   #   public: true
   espp/spi: ^1.1.4
   waveshare/esp_lcd_st7735: ^2.0.0
+  espressif/esp_lvgl_port: ^2.8.0~1
