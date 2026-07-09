@@ -9,13 +9,13 @@
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_st7735.h"
 
+// LVGL port
+#include "esp_lvgl_port.h"
+
 // ERROR STUFF! (totally not having those)
 #include "esp_check.h"
 #include "esp_log.h"
 
-// LVGL Stuff - Shhhhhhhh, you're fine
-#include "lvgl.h" 
-#include "esp_lvgl_port.h"
 
 #define LCD_SCLK_PIN 36
 #define LCD_MOSI_PIN 35
@@ -68,13 +68,6 @@ static esp_err_t create_lcd_panel(esp_lcd_panel_io_handle_t lcd_io, esp_lcd_pane
     return esp_lcd_new_panel_st7735(lcd_io, &panel_cfg, lcd_panel);
 }
 
-static esp_err_t lvgl_init() {
-    const lvgl_port_cfg_t lvgl_cfg = ESP_LVGL_PORT_INIT_CONFIG();
-    esp_err_t ret = esp_lvgl_port_init(&lvgl_cfg);
-
-    return ret;
-}
-
 esp_err_t lcd_init(void)
 {
     esp_err_t ret = ESP_OK;
@@ -98,6 +91,23 @@ esp_err_t lcd_init(void)
 
     ESP_LOGD("LCD", "Turning on LCD panel...");
     ESP_GOTO_ON_ERROR(esp_lcd_panel_disp_on_off(lcd_panel, true), err, TAG, "Failed to turn on LCD panel");
+
+    const lvgl_port_display_cfg_t disp_cfg = {
+        .io_handle = lcd_io,
+        .panel_handle = lcd_panel,
+        .buffer_size = LCD_H_RES * 20,
+        .double_buffer = false,
+        .hres = LCD_H_RES,
+        .vres = LCD_V_RES,
+        .flags = {
+            .buff_dma = true,
+        },
+    };
+
+    if (lvgl_port_add_disp(&disp_cfg) == NULL) {
+        ret = ESP_FAIL;
+        goto err;
+    }
 
     ESP_LOGD("LCD", "LCD panel initialized successfully.");
     return ret;

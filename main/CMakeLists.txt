@@ -1,3 +1,3 @@
-idf_component_register(SRCS "main copy.c" "main.c" "lcd_init.c"
+idf_component_register(SRCS "main.c" "lcd_init.c" "display.c"
                     INCLUDE_DIRS ".")
 

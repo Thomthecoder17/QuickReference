@@ -10,6 +10,8 @@
 #include "esp_check.h"
 
 #include "lcd_init.h"
+#include "display.h"
+#include "demos/widgets/lv_demo_widgets.h" //IT'S RIGHT THERE!!!!!!!!!!!!!!!
 
 #define PIN_NUM_SCLK           36
 #define PIN_NUM_MOSI           35
@@ -26,12 +28,20 @@
 
 void app_main(void)
 {
-    // 1. Initialize lcd
-    lcd_init();
-    // Is this a real thing? - nope
-    lv_demo_benchmark();   
-    // 4. Clean up app_main to prevent the Watchdog crash
-    // Do NOT run a tight loop here. Delete this task so the core can rest.
-    ESP_LOGI("MAIN", "UI Initialized. Deleting app_main task.");
-    vTaskDelete(NULL); 
+    // 1. Initialize LVGL
+    ESP_ERROR_CHECK(lvgl_init());
+
+    // 2. Initialize lcd and register the display with LVGL
+    ESP_ERROR_CHECK(lcd_init());
+
+    // 3. Build the demo UI while holding the LVGL mutex
+    if (lvgl_port_lock(0)) {
+        lv_demo_widgets();
+        lvgl_port_unlock();
+    }
+
+    // Keep app_main alive but idle so the system watchdog stays happy.
+    while (true) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
