@@ -21,3 +21,15 @@ err:
     return ret;
 }
 
+esp_err_t draw_ui(void) {
+    ESP_LOGD("LVGL", "Drawing UI...");
+    if (lvgl_port_lock(0)) {
+        // ADD DRAWING SH!T HERE
+        lvgl_port_unlock();
+    } else {
+        ESP_LOGE("LVGL", "Failed to lock LVGL mutex for drawing UI");
+        return ESP_FAIL;
+    }
+    return ESP_OK;
+}
+
