@@ -1,6 +1,6 @@
 dependencies:
   espp/base_component:
-    component_hash: 2385ba0096f7a12affef3f4c934fabc9a433fd20b69c9b03cfd5ea50195633db
+    component_hash: 20699baa1c55a370c94e706b389e11c92be8677dab401f74e1617a3ec0375569
     dependencies:
     - name: espp/logger
       registry_url: https://components.espressif.com
@@ -12,9 +12,9 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.1.4
+    version: 1.1.6
   espp/format:
-    component_hash: 345ec7e663bb12db94448d9916e64daf7f562694bc9d66553d99c2ebafeca12d
+    component_hash: d506a9792ce7fe084c90f017f25b0bdaba21ddd818cf8cbf832aa0ea11a14b68
     dependencies:
     - name: idf
       require: private
@@ -22,9 +22,9 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.1.4
+    version: 1.1.6
   espp/logger:
-    component_hash: de1cfab29f985c5774c5da8f74b938fc016e71b21609a459bc757835c94e4709
+    component_hash: 1519eb5330b436465d4a5dd21734c92505716df952feb21fdaece95282c21431
     dependencies:
     - name: espp/format
       registry_url: https://components.espressif.com
@@ -36,7 +36,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.1.4
+    version: 1.1.6
   espp/spi:
     component_hash: 661ce4fd9866adfc4a129b6d3040b9be71b80303b26fbf126594647535bea924
     dependencies:
@@ -56,7 +56,7 @@ dependencies:
       type: service
     version: 1.1.4
   espp/task:
-    component_hash: fd9ca9ce46887136051c9234a2ded8c7f2ef95d0430226791dbfd0f33acf9a1a
+    component_hash: f1a359549faf437e16688dc265602abf94269ee116de3cf868121737ae954d79
     dependencies:
     - name: espp/base_component
       registry_url: https://components.espressif.com
@@ -68,7 +68,7 @@ dependencies:
     source:
       registry_url: https://components.espressif.com
       type: service
-    version: 1.1.4
+    version: 1.1.6
   espressif/esp_lvgl_port:
     component_hash: fb6c1fdfe70d4ca39a035d63ca394a35f17ec84ce16ff98ecb13a54155d75da4
     dependencies:
@@ -91,7 +91,7 @@ dependencies:
     component_hash: 184e532558c1c45fefed631f3e235423d22582aafb4630f3e8885c35281a49ae
     dependencies: []
     source:
-      registry_url: https://components.espressif.com
+      registry_url: https://components.espressif.com/
       type: service
     version: 9.5.0
   waveshare/esp_lcd_st7735:
@@ -105,7 +105,8 @@ direct_dependencies:
 - espp/spi
 - espressif/esp_lvgl_port
 - idf
+- lvgl/lvgl
 - waveshare/esp_lcd_st7735
-manifest_hash: ed861723dcf7603417935bf0efc73c3d23fd2c1155cbce444c439c87d415090c
+manifest_hash: e3328667a8efb776f78177ce2cc45ee4ca81b9878f93f4765b28155c7522a16b
 target: esp32s2
 version: 3.0.0
