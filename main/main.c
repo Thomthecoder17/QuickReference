@@ -9,7 +9,7 @@
 
 #include "lcd_init.h"
 #include "display.h"
-// #include "wifi_init.h"
+#include "wifi_init.h"
 
 #define PIN_NUM_SCLK           36
 #define PIN_NUM_MOSI           35
@@ -26,8 +26,11 @@
 
 void app_main(void)
 {
+    esp_log_level_set("*", ESP_LOG_DEBUG); 
+    
+    ESP_LOGI("MAIN", "App started up successfully.");
     // Set up WiFi
-    // ESP_ERROR_CHECK(wifi_init());
+    ESP_ERROR_CHECK(wifi_init());
 
     //Initialize LVGL
     ESP_ERROR_CHECK(lvgl_init());
