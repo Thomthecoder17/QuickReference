@@ -39,5 +39,17 @@ menu "QuickReference Configuration"
             int "LCD Pixel Clock Frequency"
             default 30000000
     endmenu
+
+    menu "Weather API configuration"
+        config WEATHER_API_URL
+            string "Weather API URL"
+            default "https://api.weather.gov/"
+        config WEATHER_STATION_ID
+            string "Weather Station ID"
+            default "BHBM3"
+        config WEATHER_REQUIRE_QC
+            bool "Require Quality Control"
+            default y
+    endmenu
 endmenu
     

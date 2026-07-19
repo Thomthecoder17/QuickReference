@@ -10,6 +10,7 @@
 #include "lcd_init.h"
 #include "display.h"
 #include "wifi_init.h"
+#include "weather_api.h"
 
 #define PIN_NUM_SCLK           36
 #define PIN_NUM_MOSI           35
@@ -25,9 +26,7 @@
 #define LCD_HOST SPI2_HOST
 
 void app_main(void)
-{
-    esp_log_level_set("*", ESP_LOG_DEBUG); 
-    
+{   
     ESP_LOGI("MAIN", "App started up successfully.");
     // Set up WiFi
     ESP_ERROR_CHECK(wifi_init());
@@ -41,11 +40,22 @@ void app_main(void)
     //Build the UI after the display is registered
     ESP_ERROR_CHECK(init_ui());
 
-    //Update the UI text
-    ESP_ERROR_CHECK(set_weather_text("25°C"));
+    ESP_ERROR_CHECK(set_weather_text("..."));
+
+    //Initialize the HTTP client
+    ESP_ERROR_CHECK(init_api());
+
+    //Fetch weather data
+    ESP_ERROR_CHECK(fetch_weather_data());  
 
     //Keep app_main alive but idle so the system watchdog stays happy.
     while (true) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        //Update the UI text
+        int temp_int = (int)temp;
+        char weather_text[32];
+        snprintf(weather_text, sizeof(weather_text), "%d°F", temp_int);
+        ESP_LOGI("MAIN", "Setting weather text: %s", weather_text);
+        ESP_ERROR_CHECK(set_weather_text(weather_text));
+        vTaskDelay(pdMS_TO_TICKS(60000));
     }
 }
