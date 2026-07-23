@@ -38,3 +38,5 @@ This project is designed for an ESP32 based board with an st7735 based TFT displ
 
 ## Known Bugs:
 - Weather.gov will sometimes report null data. In testing, this was not handled properly, resulting in an inaccurate prediction of 32F (0C).
+
+## AI was used to help develop much of this project. I try my best to not produce pure AI slop, so I do understand a vast majority of the code. That being said, given that I had never used ESP-IDF before, I did rely on AI to explain to me much of what it had written and I did rely on it to teach me how to program using ESP-IDF. 
