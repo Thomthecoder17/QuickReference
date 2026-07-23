@@ -31,6 +31,10 @@ This project is designed for an ESP32 based board with an st7735 based TFT displ
 - For boarda with limited DIRAM, lower LVGL's memory allocation to 24 instead of 48kB in menuconfig.
 - If low on flash storage, set the partition table to the custom csv at partitions.csv. This is designed for 2MB flash boards.
 - ### Currently, the transit side is not implemented. You can ignore configuration for now. The weather side does work.
+- Bill of materials also substitutes many components. The components I used were gathered from old projects and from a local makerspace, so many were discontinued.
+    - Notable changes:
+        - ESP32-S2-Saola-1M was replaced by ESP32-S2-DevKitC-1-N8R2. I believe this was a similar price to my board, and it seems to actually have more flash storage and RAM.
+        - SainSmart 1.8" TFT SPI LCD Screen was replaced with a HiLetgo 1.8" TFT LCD. They both use the exact same contorller driver, so it should be a direct replacement.
 
 ## Known Bugs:
 - Weather.gov will sometimes report null data. In testing, this was not handled properly, resulting in an inaccurate prediction of 32F (0C).
