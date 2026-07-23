@@ -4,7 +4,7 @@
   "idf.openOcdConfigs": [
     "board/esp32s2-bridge.cfg"
   ],
-  "idf.port": "/dev/tty.usbserial-1110",
+  "idf.port": "/dev/tty.usbserial-3110",
   "idf.currentSetup": "/Users/thefoxyone/.espressif/v6.0.2/esp-idf",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32s2"
