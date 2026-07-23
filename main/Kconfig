@@ -51,5 +51,17 @@ menu "QuickReference Configuration"
             bool "Require Quality Control"
             default y
     endmenu
+
+    menu "Transit API configuration"
+        config TRANSIT_API_URL
+            string "Transit API URL"
+            default "https://api-v3.mbta.com/"
+        config TRANSIT_STOP_ID
+            string "Transit Stop ID"
+            default "place-pktrm"
+        config TRANSIT_ROUTE_ID
+            string "Transit Route ID"
+            default "Red"
+    endmenu
 endmenu
     

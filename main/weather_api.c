@@ -1,5 +1,6 @@
-#include <string.h>
 #include "weather_api.h"
+
+#include <string.h>
 
 #include "esp_log.h"
 #include "esp_check.h"
@@ -10,9 +11,8 @@
 #include "cJSON.h"
 
 #include "config.h"
-#include "esp_sntp.h"
 
-#define TAG "HTTP_CLIENT"
+#define TAG "WEATHER_API"
 #define MAX_HTTP_OUTPUT_BUFFER 4096
 
 double temp = 0; // Global variable to store the temperature
@@ -24,12 +24,6 @@ typedef struct {
 
 static esp_http_client_handle_t client = NULL;
 static http_response_t local_response = {0};
-
-void init_sntp(void) {
-    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    esp_sntp_setservername(0, "pool.ntp.org");
-    esp_sntp_init();
-}
 
 static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     switch (evt->event_id) {
@@ -71,13 +65,17 @@ static esp_err_t _http_event_handler(esp_http_client_event_t *evt) {
     return ESP_OK;
 }
 
-esp_err_t init_api(void) {
+esp_err_t init_weather_api(void) {
     esp_err_t ret = ESP_OK;
 
-    init_sntp(); // Initialize SNTP to ensure time is set for HTTPS requests
+    ret = init_sntp(); // Initialize SNTP to ensure time is set for HTTPS requests
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to initialize SNTP");
+        return ret;
+    }
 
     char user_agent[64] = {0};
-    snprintf(user_agent, sizeof(user_agent), "(%s/%s, thombitrob17@gmail.com)", APP_NAME, FIRMWARE_VERSION);
+    snprintf(user_agent, sizeof(user_agent), "%s/%s", APP_NAME, FIRMWARE_VERSION);
 
     char url[256] = {0};
     char* require_qc = CONFIG_WEATHER_REQUIRE_QC ? "true" : "false";
@@ -116,7 +114,7 @@ esp_err_t fetch_weather_data(void) {
 
     ret = esp_http_client_perform(client);
     if (ret != ESP_OK) {
-        ESP_LOGE(TAG, "Failed to perform HTTP request: %s", esp_err_to_name(ret));
+        ESP_LOGE(TAG, "HTTP request failed: %s", esp_err_to_name(ret));
         return ESP_FAIL;
     }
 
@@ -161,4 +159,3 @@ esp_err_t fetch_weather_data(void) {
 
     return ret;
 }
-
